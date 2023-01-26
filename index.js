@@ -117,7 +117,7 @@ app.post('/:action', urlEncodedParser, passport.authenticate('jwt', { session: f
 app.get('/products', async (req, res) => {
     const options = {
         method: 'GET',
-        url: 'https://nodejs-d27e.restdb.io/rest/utilisateurs',
+        url: 'https://nodejs-d27e.restdb.io/rest/products',
         headers: { 'x-apikey': '3f0a468d13b5689cc8d8d0c7f0b13d870407d' },
     };
     const response = await axios(options);
@@ -126,14 +126,21 @@ app.get('/products', async (req, res) => {
 });
 
 app.get('/product/:id', (req, res) => {
-    // TODO
+    const options = {
+        method: 'GET',
+        url: `https://nodejs-d27e.restdb.io/rest/products/${req.body.id}`,
+        headers: { 'x-apikey': '3f0a468d13b5689cc8d8d0c7f0b13d870407d' },
+    };
+    const response = await axios(options);
+
+    res.json(response.data);
 });
 
 app.delete('/delete/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
         options = {
             method: 'DELETE',
-            url: `https://nodejs-d27e.restdb.io/rest/products${req.body.id}`,
+            url: `https://nodejs-d27e.restdb.io/rest/products/${req.body.id}`,
             headers: { 'x-apikey': '3f0a468d13b5689cc8d8d0c7f0b13d870407d' },
         };
         response = await axios(options);
