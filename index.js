@@ -3,12 +3,15 @@ const app = express();
 const axios = require('axios')
 const passport = require('passport')
 const jwt = require('jsonwebtoken');
+const cors = require('cors')
 const JWTStrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 const secret = "klahfaik?FLMKAHZGOPIAZHGpfklkdmgùzgjnùm942";
 const urlEncodedParser = express.urlencoded({ extended: false })
 
 /* Middlewares */
+app.use(cors())
+
 app.use(passport.initialize());
 
 passport.use(new JWTStrategy({
