@@ -104,11 +104,39 @@ app.get('/index', passport.authenticate('jwt', { session: false }), (req, res) =
     res.send('Index');
 });
 
-app.post('/:action/:id?', urlEncodedParser, passport.authenticate('jwt', { session: false }), (req, res) => {
+app.post('/:action/:id?', urlEncodedParser, passport.authenticate('jwt', { session: false }), async (req, res) => {
     if (req.params.action === 'update') {
-        // TODO
+        try {
+            const options = {
+                method: 'PUT',
+                url: `https://nodejs-d27e.restdb.io/rest/products/${id}`,
+                headers: {
+                    'cache-control': 'no-cache',
+                    'x-apikey': '3f0a468d13b5689cc8d8d0c7f0b13d870407d',
+                    'content-type': 'application/json'
+                },
+                data: { name: req.body.name, price: req.body.price }
+            };
+            
+            await axios(options);
+            res.send('Product updated!');
+        } catch (error) {
+            res.send('Error when updating the product.')
+        }
     } else if (req.params.action === 'create') {
-        // TODO
+        const options = {
+            method: 'POST',
+            url: 'https://nodejs-d27e.restdb.io/rest/products',
+            headers: {
+                'cache-control': 'no-cache',
+                'x-apikey': '3f0a468d13b5689cc8d8d0c7f0b13d870407d',
+                'content-type': 'application/json'
+            },
+            data: { name: req.body.name, price: req.body.price }
+        };
+
+        await axios(options);
+        res.send('Product created!');
     } else {
         res.send('This action does not exist.');
     }
