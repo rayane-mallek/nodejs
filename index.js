@@ -174,7 +174,7 @@ app.delete('/delete/:id', passport.authenticate('jwt', { session: false }), asyn
     try {
         options = {
             method: 'DELETE',
-            url: `https://'${process.env.DB_NAME}.restdb.io/rest/products/${req.params.id}`,
+            url: `https://${process.env.DB_NAME}.restdb.io/rest/products/${req.params.id}`,
             headers: { 'x-apikey': process.env.API_KEY },
         };
         response = await axios(options);
