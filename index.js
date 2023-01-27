@@ -8,6 +8,7 @@ const JWTStrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 const secret = "klahfaik?FLMKAHZGOPIAZHGpfklkdmgùzgjnùm942";
 const urlEncodedParser = express.urlencoded({ extended: false })
+require('dotenv').config();
 
 /* Middlewares */
 app.use(cors());
@@ -26,7 +27,7 @@ passport.use(new JWTStrategy({
         const options = {
             method: 'GET',
             url: 'https://nodejs-d27e.restdb.io/rest/utilisateurs',
-            headers: { 'x-apikey': '3f0a468d13b5689cc8d8d0c7f0b13d870407d' },
+            headers: { 'x-apikey': process.env.API_KEY },
         };
 
         const response = await axios(options);
@@ -49,7 +50,7 @@ app.post('/register', urlEncodedParser, async (req, res) => {
         let options = {
             method: 'GET',
             url: 'https://nodejs-d27e.restdb.io/rest/utilisateurs',
-            headers: { 'x-apikey': '3f0a468d13b5689cc8d8d0c7f0b13d870407d' },
+            headers: { 'x-apikey': process.env.API_KEY },
         };
         const response = await axios(options);
         const users = response.data;
@@ -63,7 +64,7 @@ app.post('/register', urlEncodedParser, async (req, res) => {
                 url: 'https://nodejs-d27e.restdb.io/rest/utilisateurs',
                 headers: {
                     'cache-control': 'no-cache',
-                    'x-apikey': '3f0a468d13b5689cc8d8d0c7f0b13d870407d',
+                    'x-apikey': process.env.API_KEY,
                     'content-type': 'application/json'
                 },
                 data: { email: req.body.email, password: req.body.password }
@@ -83,7 +84,7 @@ app.post('/login', urlEncodedParser, async (req, res) => {
         const options = {
             method: 'GET',
             url: 'https://nodejs-d27e.restdb.io/rest/utilisateurs',
-            headers: { 'x-apikey': '3f0a468d13b5689cc8d8d0c7f0b13d870407d' },
+            headers: { 'x-apikey': process.env.API_KEY },
         };
         const response = await axios(options);
         const users = response.data;
@@ -113,7 +114,7 @@ app.post('/:action/:id?', urlEncodedParser, passport.authenticate('jwt', { sessi
                 url: `https://nodejs-d27e.restdb.io/rest/products/${req.body.id}`,
                 headers: {
                     'cache-control': 'no-cache',
-                    'x-apikey': '3f0a468d13b5689cc8d8d0c7f0b13d870407d',
+                    'x-apikey': process.env.API_KEY,
                     'content-type': 'application/json'
                 },
                 data: { name: req.body.name, price: req.body.price }
@@ -130,7 +131,7 @@ app.post('/:action/:id?', urlEncodedParser, passport.authenticate('jwt', { sessi
             url: 'https://nodejs-d27e.restdb.io/rest/products',
             headers: {
                 'cache-control': 'no-cache',
-                'x-apikey': '3f0a468d13b5689cc8d8d0c7f0b13d870407d',
+                'x-apikey': process.env.API_KEY,
                 'content-type': 'application/json'
             },
             data: { name: req.body.name, price: req.body.price }
@@ -147,7 +148,7 @@ app.get('/products', async (req, res) => {
     const options = {
         method: 'GET',
         url: 'https://nodejs-d27e.restdb.io/rest/products',
-        headers: { 'x-apikey': '3f0a468d13b5689cc8d8d0c7f0b13d870407d' },
+        headers: { 'x-apikey': process.env.API_KEY },
     };
     const response = await axios(options);
 
@@ -159,7 +160,7 @@ app.get('/product/:id', async (req, res) => {
         const options = {
             method: 'GET',
             url: `https://nodejs-d27e.restdb.io/rest/products/${req.params.id}`,
-            headers: { 'x-apikey': '3f0a468d13b5689cc8d8d0c7f0b13d870407d' },
+            headers: { 'x-apikey': process.env.API_KEY },
         };
         const response = await axios(options);
     
@@ -174,7 +175,7 @@ app.delete('/delete/:id', passport.authenticate('jwt', { session: false }), asyn
         options = {
             method: 'DELETE',
             url: `https://nodejs-d27e.restdb.io/rest/products/${req.params.id}`,
-            headers: { 'x-apikey': '3f0a468d13b5689cc8d8d0c7f0b13d870407d' },
+            headers: { 'x-apikey': process.env.API_KEY },
         };
         response = await axios(options);
     
