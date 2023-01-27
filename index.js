@@ -26,7 +26,7 @@ passport.use(new JWTStrategy({
     try {
         const options = {
             method: 'GET',
-            url: 'https://nodejs-d27e.restdb.io/rest/utilisateurs',
+            url: 'https://'+process.env.DB_NAME+'.restdb.io/rest/utilisateurs',
             headers: { 'x-apikey': process.env.API_KEY },
         };
 
@@ -49,7 +49,7 @@ app.post('/register', urlEncodedParser, async (req, res) => {
     try {
         let options = {
             method: 'GET',
-            url: 'https://nodejs-d27e.restdb.io/rest/utilisateurs',
+            url: 'https://'+process.env.DB_NAME+'.restdb.io/rest/utilisateurs',
             headers: { 'x-apikey': process.env.API_KEY },
         };
         const response = await axios(options);
@@ -61,7 +61,7 @@ app.post('/register', urlEncodedParser, async (req, res) => {
         } else {
             options = {
                 method: 'POST',
-                url: 'https://nodejs-d27e.restdb.io/rest/utilisateurs',
+                url: 'https://'+process.env.DB_NAME+'.restdb.io/rest/utilisateurs',
                 headers: {
                     'cache-control': 'no-cache',
                     'x-apikey': process.env.API_KEY,
@@ -83,7 +83,7 @@ app.post('/login', urlEncodedParser, async (req, res) => {
     try {
         const options = {
             method: 'GET',
-            url: 'https://nodejs-d27e.restdb.io/rest/utilisateurs',
+            url: 'https://'+process.env.DB_NAME+'.restdb.io/rest/utilisateurs',
             headers: { 'x-apikey': process.env.API_KEY },
         };
         const response = await axios(options);
@@ -111,7 +111,7 @@ app.post('/:action/:id?', urlEncodedParser, passport.authenticate('jwt', { sessi
         try {
             const options = {
                 method: 'PUT',
-                url: `https://nodejs-d27e.restdb.io/rest/products/${req.body.id}`,
+                url: `https://${process.env.DB_NAME}.restdb.io/rest/products/${req.body.id}`,
                 headers: {
                     'cache-control': 'no-cache',
                     'x-apikey': process.env.API_KEY,
@@ -128,7 +128,7 @@ app.post('/:action/:id?', urlEncodedParser, passport.authenticate('jwt', { sessi
     } else if (req.params.action === 'create') {
         const options = {
             method: 'POST',
-            url: 'https://nodejs-d27e.restdb.io/rest/products',
+            url: 'https://'+process.env.DB_NAME+'.restdb.io/rest/products',
             headers: {
                 'cache-control': 'no-cache',
                 'x-apikey': process.env.API_KEY,
@@ -147,7 +147,7 @@ app.post('/:action/:id?', urlEncodedParser, passport.authenticate('jwt', { sessi
 app.get('/products', async (req, res) => {
     const options = {
         method: 'GET',
-        url: 'https://nodejs-d27e.restdb.io/rest/products',
+        url: 'https://'+process.env.DB_NAME+'.restdb.io/rest/products',
         headers: { 'x-apikey': process.env.API_KEY },
     };
     const response = await axios(options);
@@ -159,7 +159,7 @@ app.get('/product/:id', async (req, res) => {
     try {
         const options = {
             method: 'GET',
-            url: `https://nodejs-d27e.restdb.io/rest/products/${req.params.id}`,
+            url: `https://${process.env.DB_NAME}.restdb.io/rest/products/${req.params.id}`,
             headers: { 'x-apikey': process.env.API_KEY },
         };
         const response = await axios(options);
@@ -174,7 +174,7 @@ app.delete('/delete/:id', passport.authenticate('jwt', { session: false }), asyn
     try {
         options = {
             method: 'DELETE',
-            url: `https://nodejs-d27e.restdb.io/rest/products/${req.params.id}`,
+            url: `https://'${process.env.DB_NAME}.restdb.io/rest/products/${req.params.id}`,
             headers: { 'x-apikey': process.env.API_KEY },
         };
         response = await axios(options);
