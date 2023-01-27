@@ -10,7 +10,7 @@ const secret = "klahfaik?FLMKAHZGOPIAZHGpfklkdmgùzgjnùm942";
 const urlEncodedParser = express.urlencoded({ extended: false })
 
 /* Middlewares */
-app.use(cors())
+app.use(cors());
 
 app.use(passport.initialize());
 
@@ -153,7 +153,7 @@ app.get('/products', async (req, res) => {
     res.json(response.data);
 });
 
-app.get('/product/:id', (req, res) => {
+app.get('/product/:id', async (req, res) => {
     const options = {
         method: 'GET',
         url: `https://nodejs-d27e.restdb.io/rest/products/${req.body.id}`,
