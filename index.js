@@ -100,6 +100,7 @@ app.post('/login', urlEncodedParser, async (req, res) => {
         throw new Error(error);
     }
 });
+
 app.get('/index', passport.authenticate('jwt', { session: false }), (req, res) => {
     res.send('Index');
 });
@@ -109,7 +110,7 @@ app.post('/:action/:id?', urlEncodedParser, passport.authenticate('jwt', { sessi
         try {
             const options = {
                 method: 'PUT',
-                url: `https://nodejs-d27e.restdb.io/rest/products/${id}`,
+                url: `https://nodejs-d27e.restdb.io/rest/products/${req.body.id}`,
                 headers: {
                     'cache-control': 'no-cache',
                     'x-apikey': '3f0a468d13b5689cc8d8d0c7f0b13d870407d',
@@ -121,7 +122,7 @@ app.post('/:action/:id?', urlEncodedParser, passport.authenticate('jwt', { sessi
             await axios(options);
             res.send('Product updated!');
         } catch (error) {
-            res.send('Error when updating the product.')
+            res.send('Error when updating the product.');
         }
     } else if (req.params.action === 'create') {
         const options = {
@@ -154,21 +155,25 @@ app.get('/products', async (req, res) => {
 });
 
 app.get('/product/:id', async (req, res) => {
-    const options = {
-        method: 'GET',
-        url: `https://nodejs-d27e.restdb.io/rest/products/${req.body.id}`,
-        headers: { 'x-apikey': '3f0a468d13b5689cc8d8d0c7f0b13d870407d' },
-    };
-    const response = await axios(options);
-
-    res.json(response.data);
+    try {
+        const options = {
+            method: 'GET',
+            url: `https://nodejs-d27e.restdb.io/rest/products/${req.params.id}`,
+            headers: { 'x-apikey': '3f0a468d13b5689cc8d8d0c7f0b13d870407d' },
+        };
+        const response = await axios(options);
+    
+        res.json(response.data);
+    } catch (error) {
+        res.send('This product does not exist.')
+    }
 });
 
 app.delete('/delete/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
     try {
         options = {
             method: 'DELETE',
-            url: `https://nodejs-d27e.restdb.io/rest/products/${req.body.id}`,
+            url: `https://nodejs-d27e.restdb.io/rest/products/${req.params.id}`,
             headers: { 'x-apikey': '3f0a468d13b5689cc8d8d0c7f0b13d870407d' },
         };
         response = await axios(options);
