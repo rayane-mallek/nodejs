@@ -104,7 +104,7 @@ app.get('/index', passport.authenticate('jwt', { session: false }), (req, res) =
     res.send('Index');
 });
 
-app.post('/:action', urlEncodedParser, passport.authenticate('jwt', { session: false }), (req, res) => {
+app.post('/:action/:id?', urlEncodedParser, passport.authenticate('jwt', { session: false }), (req, res) => {
     if (req.params.action === 'update') {
         // TODO
     } else if (req.params.action === 'create') {
