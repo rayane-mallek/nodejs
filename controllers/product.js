@@ -40,14 +40,18 @@ module.exports = {
         }
     },
     list: async (req, res) => {
-        const options = {
-            method: 'GET',
-            url: 'https://'+process.env.DB_NAME+'.restdb.io/rest/products',
-            headers: { 'x-apikey': process.env.API_KEY },
-        };
-        const response = await axios(options);
-    
-        res.json(response.data);
+        try {
+            const options = {
+                method: 'GET',
+                url: 'https://'+process.env.DB_NAME+'.restdb.io/rest/products',
+                headers: { 'x-apikey': process.env.API_KEY },
+            };
+            const response = await axios(options);
+        
+            res.json(response.data);
+        } catch (error) {
+            res.send('Unable to get the products.')
+        }
     },
     product: async (req, res) => {
         try {
