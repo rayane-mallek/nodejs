@@ -13,7 +13,7 @@ module.exports = {
                         'x-apikey': process.env.API_KEY,
                         'content-type': 'application/json'
                     },
-                    data: { name: req.body.name, price: req.body.price }
+                    data: { name: req.body.name, price: req.body.price, image: req.body.image }
                 };
                 
                 await axios(options);
@@ -30,7 +30,7 @@ module.exports = {
                     'x-apikey': process.env.API_KEY,
                     'content-type': 'application/json'
                 },
-                data: { name: req.body.name, price: req.body.price }
+                data: { name: req.body.name, price: req.body.price, image: req.body.image }
             };
     
             await axios(options);
