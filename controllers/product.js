@@ -13,7 +13,7 @@ module.exports = {
                         'x-apikey': process.env.API_KEY,
                         'content-type': 'application/json'
                     },
-                    data: { name: req.body.name, price: req.body.price }
+                    data: { name: req.body.name, resistance: req.body.resistance, hardness: req.body.hardness }
                 };
                 
                 await axios(options);
@@ -30,7 +30,7 @@ module.exports = {
                     'x-apikey': process.env.API_KEY,
                     'content-type': 'application/json'
                 },
-                data: { name: req.body.name, price: req.body.price }
+                data: { name: req.body.name, resistance: req.body.resistance, hardness: req.body.hardness }
             };
     
             await axios(options);
@@ -40,14 +40,18 @@ module.exports = {
         }
     },
     list: async (req, res) => {
-        const options = {
-            method: 'GET',
-            url: 'https://'+process.env.DB_NAME+'.restdb.io/rest/products',
-            headers: { 'x-apikey': process.env.API_KEY },
-        };
-        const response = await axios(options);
-    
-        res.json(response.data);
+        try {
+            const options = {
+                method: 'GET',
+                url: 'https://'+process.env.DB_NAME+'.restdb.io/rest/products',
+                headers: { 'x-apikey': process.env.API_KEY },
+            };
+            const response = await axios(options);
+        
+            res.json(response.data);
+        } catch (error) {
+            res.send('Unable to get the products.')
+        }
     },
     product: async (req, res) => {
         try {
