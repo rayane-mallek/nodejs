@@ -30,11 +30,11 @@ module.exports = {
                     'x-apikey': process.env.API_KEY,
                     'content-type': 'application/json'
                 },
-                data: { name: req.body.name, resistance: req.body.resistance, hardness: req.body.hardness }
+                data: { name: req.body.name, resistance: req.body.resistance, hardness: req.body.hardness; image: req.body.image }
             };
     
             await axios(options);
-            res.send('Product created!');
+            res.send('Product succesfully created!');
         } else {
             res.send('This action does not exist.');
         }
