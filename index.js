@@ -11,7 +11,7 @@ const { passportJWT } = require('./middlewares/auth');
 /* Middlewares */
 passport.use(passportJWT);
 app.use(passport.initialize());
-app.use(cors({origin: 'https://439hvp.csb.app/'}));
+app.use(cors());
 
 /* Routes */
 app.post('/register', urlEncodedParser, register);
