@@ -29,8 +29,7 @@ module.exports = {
                     data: { email: req.body.email, password: req.body.password }
                 };
                 await axios(options);
-                console.log('Register completed');
-                res.send('Register completed!');
+                res.json({ message: "User registered" });
             }
         } catch (error) {
             res.send('Register failed.');
