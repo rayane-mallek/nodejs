@@ -11,7 +11,7 @@ const { passportJWT } = require('./middlewares/auth');
 /* Middlewares */
 passport.use(passportJWT);
 app.use(passport.initialize());
-app.use(cors());
+app.use(cors({origin: '*'}));
 
 /* Routes */
 app.post('/register', urlEncodedParser, register);
