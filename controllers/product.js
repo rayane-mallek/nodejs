@@ -17,7 +17,7 @@ module.exports = {
                 };
                 
                 await axios(options);
-                res.send('Product updated!');
+                res.send('Product succesfully updated!');
             } catch (error) {
                 res.send('Error when updating the product.');
             }
